@@ -73,6 +73,4 @@ Jasmine Daniel
 Frontend Engineer
 THENEVERDONE
 
-## Acknowledgment
 
-Built as part of a frontend task focused on accessibility responsiveness and testable UI components
