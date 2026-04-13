@@ -1,0 +1,746 @@
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* ============================================================
+   PAGE BACKGROUND — light mode + 5px basket-weave grid
+   ============================================================ */
+.page-bg {
+  min-height: 100vh;
+  background-color: #f0f0f0;
+  background-image:
+    linear-gradient(rgba(160, 160, 160, 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(160, 160, 160, 0.22) 1px, transparent 1px);
+  background-size: 5px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+/* ============================================================
+   CARD — light glassmorphism, portrait/phone-like proportions
+   Outer: thick white semi-transparent border (premium feel)
+   Inner: slightly frosted white panel
+   ============================================================ */
+article[data-testid="test-todo-card"] {
+  position: relative;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  /* Thick white semi-opaque outer border — premium look */
+  border: 6px solid rgba(255, 255, 255, 0.85);
+  border-radius: 28px;
+  width: 100%;
+  max-width: 360px;
+  /* Portrait / phone-like aspect */
+  min-height: 580px;
+  color: #1a1a1a;
+  box-shadow:
+    0 2px 0 rgba(255,255,255,0.9) inset,
+    0 20px 60px rgba(0, 0, 0, 0.14),
+    0 4px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ============================================================
+   TOP BANNER — wallpaper + date overlay
+   ============================================================ */
+.card-banner {
+  position: relative;
+  width: 100%;
+  height: 130px;
+  background: linear-gradient(135deg, #d8d0f8 0%, #c9e8f5 50%, #cdf4e5 100%);
+  flex-shrink: 0;
+  overflow: hidden;
+  /* If user sets background-image via JS or CSS override, it will show here */
+  background-size: cover;
+  background-position: center;
+}
+
+/* Wallpaper image (inserted via JS or direct src) */
+.banner-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Placeholder shown when no wallpaper is set */
+.banner-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: rgba(100, 90, 180, 0.4);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.banner-placeholder i {
+  font-size: 28px;
+  opacity: 0.4;
+}
+
+/* Date pill overlaid on banner */
+.banner-date {
+  position: absolute;
+  bottom: 10px;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #444;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.banner-date i {
+  font-size: 12px;
+  color: #7f77dd;
+}
+
+/* ============================================================
+   CARD BODY — all rows below the banner
+   ============================================================ */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.4rem 1.4rem 1.4rem;
+  flex: 1;
+}
+
+/* ============================================================
+   ROW 1 — Heading + Checkbox
+   ============================================================ */
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+h2[data-testid="test-todo-title"] {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.45;
+  transition: color 0.25s ease, text-decoration 0.25s ease;
+  /* Allow inline editing outline */
+  outline: none;
+  border-radius: 6px;
+}
+
+h2[data-testid="test-todo-title"].done {
+  text-decoration: line-through;
+  color: rgba(26, 26, 26, 0.35);
+}
+
+h2[data-testid="test-todo-title"][contenteditable="true"] {
+  background: rgba(127, 119, 221, 0.07);
+  border: 1.5px solid rgba(127, 119, 221, 0.35);
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+/* Checkbox — square box matching wireframe */
+.checkbox-wrap {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.checkbox-wrap input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  accent-color: #7f77dd;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+/* ============================================================
+   ROW 2 — Due date + time remaining
+   ============================================================ */
+.due-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: rgba(127, 119, 221, 0.08);
+  border: 1px solid rgba(127, 119, 221, 0.18);
+  border-radius: 10px;
+}
+
+time[data-testid="test-todo-due-date"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #555;
+}
+
+time[data-testid="test-todo-due-date"] i {
+  font-size: 13px;
+  color: #7f77dd;
+}
+
+.due-text {
+  font-weight: 600;
+  color: #444;
+}
+
+time[data-testid="test-todo-time-remaining"] {
+  margin-left: auto;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #e8a020;
+  background: rgba(232, 160, 32, 0.1);
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 160, 32, 0.25);
+}
+
+time[data-testid="test-todo-time-remaining"].overdue {
+  color: #d94040;
+  background: rgba(217, 64, 64, 0.08);
+  border-color: rgba(217, 64, 64, 0.25);
+}
+
+time[data-testid="test-todo-time-remaining"].soon {
+  color: #1a9c6e;
+  background: rgba(26, 156, 110, 0.08);
+  border-color: rgba(26, 156, 110, 0.25);
+}
+
+/* ============================================================
+   ROW 3 — Description
+   ============================================================ */
+p[data-testid="test-todo-description"] {
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.65;
+  border-left: 3px solid rgba(127, 119, 221, 0.4);
+  padding-left: 10px;
+  outline: none;
+  border-radius: 0 6px 6px 0;
+  transition: background 0.2s ease, border-left-color 0.2s ease;
+}
+
+p[data-testid="test-todo-description"][contenteditable="true"] {
+  background: rgba(127, 119, 221, 0.05);
+  border-left-color: rgba(127, 119, 221, 0.6);
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(127, 119, 221, 0.3);
+  border-left: 3px solid rgba(127, 119, 221, 0.6);
+}
+
+/* ============================================================
+   ROW 4 — Priority icon + Status icon + Tags (icons only)
+   ============================================================ */
+.meta-tags-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Priority & Status badge icons */
+.badge-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: default;
+  border: 1.5px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.badge-icon:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Priority colours */
+.priority-high {
+  background: rgba(217, 64, 64, 0.1);
+  color: #d94040;
+  border-color: rgba(217, 64, 64, 0.25);
+}
+
+.priority-medium {
+  background: rgba(232, 160, 32, 0.12);
+  color: #c97a00;
+  border-color: rgba(232, 160, 32, 0.3);
+}
+
+.priority-low {
+  background: rgba(26, 156, 110, 0.1);
+  color: #1a9c6e;
+  border-color: rgba(26, 156, 110, 0.25);
+}
+
+/* Status colours */
+.status-inprogress {
+  background: rgba(127, 119, 221, 0.1);
+  color: #6a62c9;
+  border-color: rgba(127, 119, 221, 0.25);
+}
+
+.status-done {
+  background: rgba(26, 156, 110, 0.1);
+  color: #1a9c6e;
+  border-color: rgba(26, 156, 110, 0.25);
+}
+
+.status-pending {
+  background: rgba(150, 150, 150, 0.1);
+  color: #888;
+  border-color: rgba(150, 150, 150, 0.25);
+}
+
+/* Thin vertical divider between badges and tags */
+.meta-divider {
+  width: 1px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 1px;
+  margin: 0 2px;
+}
+
+/* Tags list — icons only */
+.tags-list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tag-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  color: #555;
+  cursor: default;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.tag-icon:hover {
+  background: rgba(127, 119, 221, 0.1);
+  border-color: rgba(127, 119, 221, 0.3);
+  color: #6a62c9;
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   ROW 5 — Action buttons (icon only squares, bottom right)
+   ============================================================ */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: auto;
+}
+
+/* Edit button */
+button[data-testid="test-todo-edit-button"] {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: #6a62c9;
+  background: rgba(127, 119, 221, 0.08);
+  border: 2px solid rgba(127, 119, 221, 0.3);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+button[data-testid="test-todo-edit-button"]:hover {
+  background: rgba(127, 119, 221, 0.18);
+  border-color: rgba(127, 119, 221, 0.6);
+  box-shadow: 0 4px 14px rgba(127, 119, 221, 0.2);
+}
+
+button[data-testid="test-todo-edit-button"]:focus-visible {
+  outline: 2px solid #7f77dd;
+  outline-offset: 2px;
+}
+
+/* Delete button */
+button[data-testid="test-todo-delete-button"] {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: #d94040;
+  background: rgba(217, 64, 64, 0.07);
+  border: 2px solid rgba(217, 64, 64, 0.25);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+button[data-testid="test-todo-delete-button"]:hover {
+  background: rgba(217, 64, 64, 0.14);
+  border-color: rgba(217, 64, 64, 0.55);
+  box-shadow: 0 4px 14px rgba(217, 64, 64, 0.15);
+}
+
+button[data-testid="test-todo-delete-button"]:focus-visible {
+  outline: 2px solid #d94040;
+  outline-offset: 2px;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* ============================================================
+   EDIT PANEL — slides in from the bottom of the card
+   ============================================================ */
+.edit-panel {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 22px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  animation: panelSlideIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  z-index: 10;
+}
+
+.edit-panel[hidden] {
+  display: none;
+}
+
+@keyframes panelSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.edit-panel-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.6rem 1.4rem;
+  flex: 1;
+}
+
+.edit-panel-heading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.4rem;
+}
+
+.edit-panel-heading i {
+  color: #7f77dd;
+  font-size: 0.95rem;
+}
+
+.edit-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: -4px;
+}
+
+.edit-input,
+.edit-textarea,
+.edit-select {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: #1a1a1a;
+  background: rgba(127, 119, 221, 0.05);
+  border: 1.5px solid rgba(127, 119, 221, 0.25);
+  border-radius: 10px;
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  resize: none;
+}
+
+.edit-input:focus,
+.edit-textarea:focus,
+.edit-select:focus {
+  border-color: #7f77dd;
+  box-shadow: 0 0 0 3px rgba(127, 119, 221, 0.12);
+}
+
+.edit-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237f77dd' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+.edit-panel-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 0.6rem;
+}
+
+.btn-save {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: #fff;
+  background: linear-gradient(135deg, #7f77dd, #5d55c9);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(127, 119, 221, 0.35);
+  transition: opacity 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.btn-save:hover {
+  opacity: 0.92;
+  box-shadow: 0 6px 20px rgba(127, 119, 221, 0.4);
+}
+
+.btn-save:focus-visible {
+  outline: 2px solid #7f77dd;
+  outline-offset: 2px;
+}
+
+.btn-cancel {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: #888;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-cancel:hover {
+  background: rgba(0, 0, 0, 0.09);
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+.btn-cancel:focus-visible {
+  outline: 2px solid #888;
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   DELETE CONFIRMATION OVERLAY
+   ============================================================ */
+.delete-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  padding: 2rem;
+  z-index: 20;
+  animation: panelSlideIn 0.25s ease both;
+}
+
+.delete-overlay[hidden] {
+  display: none;
+}
+
+.delete-overlay-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(217, 64, 64, 0.1);
+  border: 2px solid rgba(217, 64, 64, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: #d94040;
+}
+
+.delete-overlay-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  text-align: center;
+}
+
+.delete-overlay-sub {
+  font-size: 0.82rem;
+  color: #888;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.delete-overlay-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.btn-confirm-delete {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: #fff;
+  background: linear-gradient(135deg, #d94040, #b02a2a);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(217, 64, 64, 0.3);
+  transition: opacity 0.2s ease, transform 0.1s ease;
+}
+
+.btn-confirm-delete:hover {
+  opacity: 0.88;
+}
+
+.btn-confirm-delete:focus-visible {
+  outline: 2px solid #d94040;
+  outline-offset: 2px;
+}
+
+.btn-cancel-delete {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: #888;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn-cancel-delete:hover {
+  background: rgba(0, 0, 0, 0.09);
+}
+
+.btn-cancel-delete:focus-visible {
+  outline: 2px solid #888;
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   RESPONSIVE — 320px to 1200px
+   ============================================================ */
+@media (max-width: 420px) {
+  article[data-testid="test-todo-card"] {
+    border-radius: 20px;
+    border-width: 4px;
+  }
+
+  .card-body {
+    padding: 1.2rem;
+  }
+
+  .card-banner {
+    height: 110px;
+  }
+
+  h2[data-testid="test-todo-title"] {
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 600px) {
+  article[data-testid="test-todo-card"] {
+    max-width: 380px;
+  }
+}
