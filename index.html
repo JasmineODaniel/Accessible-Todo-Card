@@ -8,234 +8,125 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div class="page-bg">
+    <article data-testid="test-todo-card">
 
-  <main class="page-bg">
-
-    <article data-testid="test-todo-card" role="region" aria-label="Todo task card">
-
-      <h2 class="sr-only">Todo task card with controls for editing, deleting, and marking complete</h2>
-
-      <!-- ═══════════════════════════════════════════
-           TOP BANNER — wallpaper slot + date overlay
-           ═══════════════════════════════════════════ -->
-      <div class="card-banner">
-        <!--
-          WALLPAPER SLOT:
-          To insert your own image, replace the src below:
-          <img src="YOUR_IMAGE_URL_HERE" alt="Task wallpaper" class="banner-img" />
-          Or set a CSS background-image on .card-banner in styles.css:
-          background-image: url('YOUR_IMAGE_URL_HERE');
-        -->
-        <div class="banner-placeholder" aria-hidden="true">
+      <!-- WALLPAPER — sits behind everything -->
+      <div class="card-wallpaper">
+        <!-- Replace src with your image -->
+        <img class="wallpaper-img" src="" alt="Wallpaper" />
+        <div class="wallpaper-placeholder">
           <i class="fa-solid fa-image"></i>
           <span>Wallpaper</span>
         </div>
-        <div class="banner-date">
-          <i class="fa-regular fa-calendar-days" aria-hidden="true"></i>
-          <time id="current-date" datetime="" aria-label="Today's date"></time>
-        </div>
       </div>
 
-      <!-- ═══════════════════════════════════════════
-           CARD BODY
-           ═══════════════════════════════════════════ -->
-      <div class="card-body">
+      <!-- MAIN CONTENT RECTANGLE — 15px radius, on top of wallpaper -->
+      <div class="card-main">
 
-        <!-- ROW 1: Heading + Checkbox -->
-        <div class="card-header">
-          <h2
-            data-testid="test-todo-title"
-            id="task-title"
-            aria-label="Task title"
-          >
-            Redesign the onboarding flow for mobile users
-          </h2>
-          <div class="checkbox-wrap">
-            <input
-              type="checkbox"
-              id="complete-toggle"
-              data-testid="test-todo-complete-toggle"
-              aria-label="Mark task as complete"
-            />
-            <label for="complete-toggle" class="sr-only">Done</label>
-          </div>
+        <!-- DATE BAR -->
+        <div class="card-date-bar">
+          <time id="current-date" data-testid="test-todo-current-date" datetime="">
+            <i class="fa-regular fa-calendar"></i>
+            <span id="current-date-text"></span>
+          </time>
         </div>
 
-        <!-- ROW 2: Due in X days -->
+        <!-- HEADER: Title + Checkbox -->
+        <div class="card-header">
+          <h2 id="task-title" data-testid="test-todo-title">Huddle with a Mentor</h2>
+          <label class="checkbox-wrap">
+            <input type="checkbox" id="complete-toggle" aria-label="Mark complete" />
+            <span class="sr-only">Done</span>
+          </label>
+        </div>
+
+        <!-- DUE ROW -->
         <div class="due-row">
-          <time
-            data-testid="test-todo-due-date"
-            datetime="2026-04-18T18:00:00Z"
-            aria-label="Due date: Apr 18, 2026"
-          >
-            <i class="fa-regular fa-clock" aria-hidden="true"></i>
-            <span class="due-text">Due Apr 18, 2026</span>
+          <time id="due-date" data-testid="test-todo-due-date">
+            <i class="fa-regular fa-clock"></i>
+            <span class="due-text">Due in 4 days</span>
           </time>
-          <time
-            data-testid="test-todo-time-remaining"
-            id="time-remaining"
-            aria-live="polite"
-            aria-label="Time remaining"
-            datetime="2026-04-18T18:00:00Z"
-          >
+          <time id="time-remaining" data-testid="test-todo-time-remaining">
             <span id="time-remaining-text">Calculating...</span>
           </time>
         </div>
 
-        <!-- ROW 3: Description -->
-        <p
-          data-testid="test-todo-description"
-          id="task-description"
-          aria-label="Task description"
-        >
-          Audit the current onboarding screens, identify drop-off points, and produce
-          three wireframe alternatives. Align with the UX team before final handoff.
+        <!-- DESCRIPTION -->
+        <p id="task-description" data-testid="test-todo-description">
+          Join a mentor session and learn.
         </p>
 
-        <!-- ROW 4: Priority icon + Status icon + Tags (icons only) -->
+        <!-- META: Priority icon, Status icon, divider, Tag icons -->
         <div class="meta-tags-row">
-
-          <!-- Priority icon -->
-          <span
-            data-testid="test-todo-priority"
-            id="priority-badge"
-            class="badge-icon priority-high"
-            aria-label="Priority: High"
-            title="Priority: High"
-          >
-            <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+          <span id="priority-badge" class="badge-icon priority-high" data-testid="test-todo-priority" aria-label="Priority: High">
+            <i class="fa-solid fa-bolt"></i>
           </span>
-
-          <!-- Status icon -->
-          <span
-            data-testid="test-todo-status"
-            id="task-status"
-            class="badge-icon status-inprogress"
-            aria-label="Status: In Progress"
-            title="Status: In Progress"
-          >
-            <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i>
+          <span id="task-status" class="badge-icon status-inprogress" data-testid="test-todo-status" aria-label="Status: In Progress">
+            <i class="fa-solid fa-circle-half-stroke"></i>
           </span>
-
-          <!-- Divider -->
-          <span class="meta-divider" aria-hidden="true"></span>
-
-          <!-- Tags — icons only, no text -->
-          <ul data-testid="test-todo-tags" role="list" aria-label="Tags" class="tags-list">
-            <li
-              data-testid="test-todo-tag-work"
-              class="tag-icon"
-              title="Work"
-              aria-label="Tag: Work"
-            >
-              <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+          <span class="meta-divider"></span>
+          <ul class="tags-list" data-testid="test-todo-tags" aria-label="Tags">
+            <li class="tag-icon" title="Work">
+              <i class="fa-solid fa-briefcase"></i>
             </li>
-            <li
-              data-testid="test-todo-tag-urgent"
-              class="tag-icon"
-              title="Urgent"
-              aria-label="Tag: Urgent"
-            >
-              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+            <li class="tag-icon" title="Urgent">
+              <i class="fa-solid fa-fire"></i>
             </li>
-            <li
-              data-testid="test-todo-tag-design"
-              class="tag-icon"
-              title="Design"
-              aria-label="Tag: Design"
-            >
-              <i class="fa-solid fa-pen-ruler" aria-hidden="true"></i>
+            <li class="tag-icon" title="Design">
+              <i class="fa-solid fa-pen-ruler"></i>
             </li>
           </ul>
-
         </div>
 
-        <!-- ROW 5: Edit + Delete (icons only) -->
+        <!-- ACTIONS: Edit + Delete (icons only) -->
         <div class="actions">
-          <button
-            data-testid="test-todo-edit-button"
-            aria-label="Edit task"
-            id="edit-btn"
-            title="Edit task"
-          >
-            <i class="fa-solid fa-pen" aria-hidden="true"></i>
+          <button id="edit-btn" data-testid="test-todo-edit-button" aria-label="Edit task">
+            <i class="fa-solid fa-pen"></i>
           </button>
-          <button
-            data-testid="test-todo-delete-button"
-            aria-label="Delete task"
-            id="delete-btn"
-            title="Delete task"
-          >
-            <i class="fa-solid fa-trash" aria-hidden="true"></i>
+          <button id="delete-btn" data-testid="test-todo-delete-button" aria-label="Delete task">
+            <i class="fa-solid fa-trash"></i>
           </button>
         </div>
 
       </div>
 
-      <!-- ═══════════════════════════════════════════
-           EDIT PANEL (hidden by default, shown on edit click)
-           ═══════════════════════════════════════════ -->
-      <div class="edit-panel" id="edit-panel" aria-hidden="true" hidden>
+      <!-- EDIT PANEL -->
+      <div id="edit-panel" class="edit-panel" hidden>
         <div class="edit-panel-inner">
-
-          <h3 class="edit-panel-heading">
-            <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
+          <div class="edit-panel-heading">
+            <i class="fa-solid fa-pen-to-square"></i>
             Edit Task
-          </h3>
-
-          <!-- Edit title -->
-          <label for="edit-title-input" class="edit-label">Title</label>
-          <input
-            type="text"
-            id="edit-title-input"
-            class="edit-input"
-            aria-label="Edit task title"
-          />
-
-          <!-- Edit description -->
-          <label for="edit-desc-input" class="edit-label">Description</label>
-          <textarea
-            id="edit-desc-input"
-            class="edit-textarea"
-            rows="4"
-            aria-label="Edit task description"
-          ></textarea>
-
-          <!-- Edit priority -->
-          <label for="edit-priority-select" class="edit-label">Priority</label>
-          <select id="edit-priority-select" class="edit-select" aria-label="Edit task priority">
+          </div>
+          <label class="edit-label">Title</label>
+          <input id="edit-title-input" class="edit-input" type="text" />
+          <label class="edit-label">Description</label>
+          <textarea id="edit-desc-input" class="edit-textarea" rows="3"></textarea>
+          <label class="edit-label">Priority</label>
+          <select id="edit-priority-select" class="edit-select">
             <option value="low">Low</option>
             <option value="medium">Medium</option>
-            <option value="high" selected>High</option>
+            <option value="high">High</option>
           </select>
-
-          <!-- Edit status -->
-          <label for="edit-status-select" class="edit-label">Status</label>
-          <select id="edit-status-select" class="edit-select" aria-label="Edit task status">
+          <label class="edit-label">Status</label>
+          <select id="edit-status-select" class="edit-select">
             <option value="pending">Pending</option>
-            <option value="inprogress" selected>In Progress</option>
+            <option value="inprogress">In Progress</option>
             <option value="done">Done</option>
           </select>
-
-          <!-- Panel buttons -->
           <div class="edit-panel-actions">
-            <button id="edit-save-btn" class="btn-save" aria-label="Save changes">
-              <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
-              Save
+            <button id="edit-save-btn" class="btn-save">
+              <i class="fa-solid fa-check"></i> Save
             </button>
-            <button id="edit-cancel-btn" class="btn-cancel" aria-label="Cancel editing">
-              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-              Cancel
+            <button id="edit-cancel-btn" class="btn-cancel">
+              <i class="fa-solid fa-xmark"></i> Cancel
             </button>
           </div>
-
         </div>
       </div>
 
     </article>
-
-  </main>
-
-  <script src="script.js"></script>
+  </div>
+  <script src="scripts.js"></script>
 </body>
 </html>
