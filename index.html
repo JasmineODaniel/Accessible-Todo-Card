@@ -11,9 +11,9 @@
   <div class="page-bg">
     <article data-testid="test-todo-card">
 
-      <!-- WALLPAPER — sits behind everything -->
+      
       <div class="card-wallpaper">
-        <!-- Replace src with your image -->
+        
         <img class="wallpaper-img" src="sandpaper.jpg" alt="Wallpaper" />
         <div class="wallpaper-placeholder">
           <i class="fa-solid fa-image"></i>
@@ -21,10 +21,10 @@
         </div>
       </div>
 
-      <!-- MAIN CONTENT RECTANGLE — 15px radius, on top of wallpaper -->
+      
       <div class="card-main">
 
-        <!-- DATE BAR -->
+        
         <div class="card-date-bar">
           <time id="current-date" data-testid="test-todo-current-date" datetime="">
             <i class="fa-regular fa-calendar"></i>
@@ -32,20 +32,23 @@
           </time>
         </div>
 
-        <!-- HEADER: Title + Checkbox -->
+        
         <div class="card-header">
           <h2 id="task-title" data-testid="test-todo-title">Huddle with a Mentor</h2>
           <label class="checkbox-wrap">
-            <input type="checkbox" id="complete-toggle" aria-label="Mark complete" />
+            <input type="checkbox" id="complete-toggle" data-testid="test-todo-complete-toggle" aria-label="Mark complete" />
             <span class="sr-only">Done</span>
           </label>
         </div>
 
-        <!-- DUE ROW -->
+        
         <div class="due-row">
-          <time id="due-date" data-testid="test-todo-due-date">
+          <time id="due-date" data-testid="test-todo-due-date" datetime="2026-04-18T18:00:00Z">
             <i class="fa-regular fa-clock"></i>
-            <span class="due-text">Due 4d</span>
+            <span class="due-text">Due Apr 18, 2026</span>
+          </time>
+          <time id="time-remaining" data-testid="test-todo-time-remaining" aria-live="polite">
+            <span id="time-remaining-text">Calculating...</span>
           </time>
           <span id="priority-badge" class="due-pill priority-high" data-testid="test-todo-priority" aria-label="Priority: High">
             <i class="fa-solid fa-bolt"></i>
@@ -57,18 +60,18 @@
           </span>
         </div>
 
-        <!-- DESCRIPTION -->
+        
         <p id="task-description" data-testid="test-todo-description">
           Join a mentor session and learn.
         </p>
 
-        <!-- META: Priority icon, Status icon, divider, Tag icons -->
+        
         <div class="meta-tags-row">
           <ul class="tags-list" data-testid="test-todo-tags" aria-label="Tags">
-            <li class="tag-icon" title="Work">
+            <li class="tag-icon" title="Work" data-testid="test-todo-tag-work">
               <i class="fa-solid fa-briefcase"></i>
             </li>
-            <li class="tag-icon" title="Urgent">
+            <li class="tag-icon" title="Urgent" data-testid="test-todo-tag-urgent">
               <i class="fa-solid fa-fire"></i>
             </li>
             <li class="tag-icon" title="Design">
@@ -77,7 +80,7 @@
           </ul>
         </div>
 
-        <!-- ACTIONS: Edit + Delete (icons only) -->
+        
         <div class="actions">
           <button id="edit-btn" data-testid="test-todo-edit-button" aria-label="Edit task">
             <i class="fa-solid fa-pen"></i>
@@ -89,7 +92,7 @@
 
       </div>
 
-      <!-- EDIT PANEL -->
+      
       <div id="edit-panel" class="edit-panel" hidden>
         <div class="edit-panel-inner">
           <div class="edit-panel-heading">
@@ -123,7 +126,7 @@
         </div>
       </div>
 
-      <!-- DELETE CONFIRM PANEL -->
+      
       <div id="delete-modal" class="delete-modal" hidden>
         <div class="delete-modal-card" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
           <h3 id="delete-modal-title">Delete task?</h3>
@@ -140,3 +143,4 @@
   <script src="scripts.js"></script>
 </body>
 </html>
+
