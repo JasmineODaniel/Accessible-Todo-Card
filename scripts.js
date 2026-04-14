@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   var STATUS_MAP = {
-    pending:    { icon: 'fa-solid fa-circle', badge: 'status-pending', label: 'Status: Pending', text: 'Pending' },
+    pending:    { icon: 'fa-solid fa-hourglass-half', badge: 'status-pending', label: 'Status: Pending', text: 'Pending' },
     inprogress: { icon: 'fa-solid fa-circle-half-stroke', badge: 'status-inprogress', label: 'Status: In Progress', text: 'In Progress' },
     done:       { icon: 'fa-solid fa-circle-check', badge: 'status-done', label: 'Status: Done', text: 'Done' }
   };
@@ -34,6 +34,9 @@ document.addEventListener("DOMContentLoaded", function () {
   var editSaveBtn = document.getElementById('edit-save-btn');
   var editCancelBtn = document.getElementById('edit-cancel-btn');
   var deleteBtn = document.getElementById('delete-btn');
+  var deleteModal = document.getElementById('delete-modal');
+  var deleteConfirmBtn = document.getElementById('delete-confirm-btn');
+  var deleteCancelBtn = document.getElementById('delete-cancel-btn');
   var cardEl = document.querySelector('article[data-testid="test-todo-card"]');
 
   // DATE
@@ -113,10 +116,22 @@ document.addEventListener("DOMContentLoaded", function () {
   editCancelBtn.addEventListener('click', closeEditPanel);
 
   // DELETE
-  deleteBtn.addEventListener('click', function () {
-    if (confirm("Delete this task?")) {
-      cardEl.remove();
-    }
+  function openDeleteModal() {
+    deleteModal.hidden = false;
+  }
+
+  function closeDeleteModal() {
+    deleteModal.hidden = true;
+  }
+
+  deleteBtn.addEventListener('click', openDeleteModal);
+  deleteCancelBtn.addEventListener('click', closeDeleteModal);
+  deleteConfirmBtn.addEventListener('click', function () {
+    cardEl.remove();
+  });
+
+  deleteModal.addEventListener('click', function (event) {
+    if (event.target === deleteModal) closeDeleteModal();
   });
 
 });
