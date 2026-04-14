@@ -126,18 +126,18 @@ article[data-testid="test-todo-card"] {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(127, 119, 221, 0.08);
-  border: 1px solid rgba(127, 119, 221, 0.18);
-  border-radius: 999px;
-  padding: 4px 12px;
+  background: rgba(55, 233, 255, 0.12);
+  border: 1px solid rgba(55, 233, 255, 0.35);
+  border-radius: 10px;
+  padding: 5px 12px;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #555;
+  color: #9defff;
 }
 
 .card-date-bar time i {
   font-size: 12px;
-  color: #7f77dd;
+  color: #37e9ff;
 }
 
 /* HEADER */
@@ -228,21 +228,21 @@ time[data-testid="test-todo-due-date"] {
   gap: 5px;
   font-size: 0.76rem;
   font-weight: 500;
-  color: #555;
-  background: rgba(127, 119, 221, 0.08);
-  border: 1px solid rgba(127, 119, 221, 0.18);
-  border-radius: 999px;
-  padding: 4px 9px;
+  color: #9defff;
+  background: rgba(55, 233, 255, 0.12);
+  border: 1px solid rgba(55, 233, 255, 0.35);
+  border-radius: 10px;
+  padding: 5px 10px;
 }
 
 time[data-testid="test-todo-due-date"] i {
   font-size: 13px;
-  color: #7f77dd;
+  color: #37e9ff;
 }
 
 .due-text {
   font-weight: 600;
-  color: #444;
+  color: #9defff;
 }
 
 .due-pill {
@@ -395,9 +395,10 @@ button[data-testid="test-todo-edit-button"] {
 }
 
 button[data-testid="test-todo-edit-button"]:hover {
-  background: rgba(42, 42, 42, 0.98);
-  border-color: rgba(255, 255, 255, 0.28);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  background: rgba(55, 233, 255, 0.14);
+  color: #37e9ff;
+  border-color: rgba(55, 233, 255, 0.45);
+  box-shadow: none;
 }
 
 button[data-testid="test-todo-edit-button"]:focus-visible {
@@ -421,9 +422,10 @@ button[data-testid="test-todo-delete-button"] {
 }
 
 button[data-testid="test-todo-delete-button"]:hover {
-  background: rgba(42, 42, 42, 0.98);
-  border-color: rgba(255, 255, 255, 0.28);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  background: rgba(215, 30, 30, 0.96);
+  color: #ffd6d6;
+  border-color: rgba(255, 120, 120, 0.75);
+  box-shadow: none;
 }
 
 button[data-testid="test-todo-delete-button"]:focus-visible {
@@ -431,12 +433,17 @@ button[data-testid="test-todo-delete-button"]:focus-visible {
   outline-offset: 2px;
 }
 
-button[data-testid="test-todo-edit-button"]:active,
 button[data-testid="test-todo-delete-button"]:active,
 .btn-cancel:active {
   color: #ff8f8f;
   background: rgba(85, 12, 12, 0.95);
   border-color: rgba(255, 112, 112, 0.7);
+}
+
+button[data-testid="test-todo-edit-button"]:active {
+  color: #37e9ff;
+  background: rgba(55, 233, 255, 0.2);
+  border-color: rgba(55, 233, 255, 0.55);
 }
 
 button:active {
@@ -596,13 +603,86 @@ button:active {
 }
 
 .btn-cancel:hover {
-  background: rgba(34, 34, 34, 0.95);
-  border-color: #37e9ff;
+  background: rgba(217, 64, 64, 0.2);
+  color: #ff8f8f;
+  border-color: rgba(255, 120, 120, 0.7);
 }
 
 .btn-cancel:focus-visible {
   outline: 2px solid #37e9ff;
   outline-offset: 2px;
+}
+
+/* DELETE MODAL */
+.delete-modal {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+.delete-modal[hidden] {
+  display: none;
+}
+
+.delete-modal-card {
+  width: min(300px, calc(100% - 28px));
+  background: rgba(22, 22, 22, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.delete-modal-card h3 {
+  font-size: 0.95rem;
+  color: #f0f4f7;
+  margin-bottom: 6px;
+}
+
+.delete-modal-card p {
+  font-size: 0.8rem;
+  color: #b8c3ca;
+}
+
+.delete-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.delete-cancel-btn,
+.delete-confirm-btn {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.delete-cancel-btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: #dce5ea;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.delete-cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.delete-confirm-btn {
+  background: rgba(217, 64, 64, 0.2);
+  color: #ffb3b3;
+  border-color: rgba(217, 64, 64, 0.4);
+}
+
+.delete-confirm-btn:hover {
+  background: rgba(217, 64, 64, 0.3);
+  color: #ffd4d4;
 }
 
 /* RESPONSIVE */
