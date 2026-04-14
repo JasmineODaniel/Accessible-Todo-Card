@@ -26,7 +26,7 @@ This project emphasizes usability, testability, and clean frontend structure.
 - Task description
 - Priority indicator (`Low`, `Medium`, `High`)
 - Due date
-- Time remaining (e.g., `Due in 3 days`)
+- Time remaining (e.g., `Due in 2 days`)
 - Status (`Pending`, `In Progress`, `Done`)
 - Completion checkbox
 - Tags (e.g., `Work`, `Urgent`, `Design`)
