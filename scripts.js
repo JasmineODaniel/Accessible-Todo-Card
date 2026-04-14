@@ -2,16 +2,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   var DUE_DATE = new Date('2026-04-18T18:00:00Z');
 
-  var PRIORITY_MAP = { 
-    high:   { icon: 'fa-solid fa-bolt', badge: 'priority-high', label: 'Priority: High' },
-    medium: { icon: 'fa-solid fa-signal', badge: 'priority-medium', label: 'Priority: Medium' },
-    low:    { icon: 'fa-solid fa-arrow-down', badge: 'priority-low', label: 'Priority: Low' }
+  var PRIORITY_MAP = {
+    high:   { icon: 'fa-solid fa-bolt', badge: 'priority-high', label: 'Priority: High', text: 'High' },
+    medium: { icon: 'fa-solid fa-signal', badge: 'priority-medium', label: 'Priority: Medium', text: 'Medium' },
+    low:    { icon: 'fa-solid fa-arrow-down', badge: 'priority-low', label: 'Priority: Low', text: 'Low' }
   };
 
   var STATUS_MAP = {
-    pending:    { icon: 'fa-solid fa-circle', badge: 'status-pending', label: 'Status: Pending' },
-    inprogress: { icon: 'fa-solid fa-circle-half-stroke', badge: 'status-inprogress', label: 'Status: In Progress' },
-    done:       { icon: 'fa-solid fa-circle-check', badge: 'status-done', label: 'Status: Done' }
+    pending:    { icon: 'fa-solid fa-circle', badge: 'status-pending', label: 'Status: Pending', text: 'Pending' },
+    inprogress: { icon: 'fa-solid fa-circle-half-stroke', badge: 'status-inprogress', label: 'Status: In Progress', text: 'In Progress' },
+    done:       { icon: 'fa-solid fa-circle-check', badge: 'status-done', label: 'Status: Done', text: 'Done' }
   };
 
   var currentPriority = 'high';
@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", function () {
   var taskDescription = document.getElementById('task-description');
   var priorityBadge = document.getElementById('priority-badge');
   var taskStatus = document.getElementById('task-status');
-  var timeRemainingEl = document.getElementById('time-remaining');
-  var timeRemainingTxt = document.getElementById('time-remaining-text');
+  var priorityText = document.getElementById('priority-text');
+  var statusText = document.getElementById('status-text');
   var editBtn = document.getElementById('edit-btn');
   var editPanel = document.getElementById('edit-panel');
   var editTitleInput = document.getElementById('edit-title-input');
@@ -46,42 +46,35 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   renderCurrentDate();
 
-  // TIME REMAINING
-  function getTimeRemaining(due) {
-    var diff = due.getTime() - Date.now();
-    var abs = Math.abs(diff);
-    var mins = Math.floor(abs / 60000);
-    var hours = Math.floor(abs / 3600000);
-    var days = Math.floor(abs / 86400000);
-    if (diff < 0) return { text: 'Overdue', cls: 'overdue' };
-    if (mins < 60) return { text: 'Due in ' + mins + ' min', cls: 'soon' };
-    if (hours < 24) return { text: 'Due in ' + hours + ' hr', cls: 'soon' };
-    return { text: 'Due in ' + days + ' days', cls: '' };
+  function renderDueText() {
+    var diff = DUE_DATE.getTime() - Date.now();
+    var days = Math.max(0, Math.ceil(diff / 86400000));
+    var dueTextEl = document.querySelector('.due-text');
+    dueTextEl.textContent = days > 0 ? ('Due ' + days + 'd') : 'Due today';
   }
-
-  function updateTimeDisplay() {
-    var result = getTimeRemaining(DUE_DATE);
-    timeRemainingTxt.textContent = result.text;
-    timeRemainingEl.className = '';
-    if (result.cls) timeRemainingEl.classList.add(result.cls);
-  }
-  updateTimeDisplay();
-  setInterval(updateTimeDisplay, 60000);
+  renderDueText();
 
   // PRIORITY + STATUS
   function applyPriority(value) {
     var cfg = PRIORITY_MAP[value] || PRIORITY_MAP.high;
     currentPriority = value;
-    priorityBadge.className = 'badge-icon ' + cfg.badge;
+    priorityBadge.className = 'due-pill ' + cfg.badge;
+    priorityBadge.setAttribute('aria-label', cfg.label);
     priorityBadge.querySelector('i').className = cfg.icon;
+    priorityText.textContent = cfg.text;
   }
 
   function applyStatus(value) {
     var cfg = STATUS_MAP[value] || STATUS_MAP.inprogress;
     currentStatus = value;
-    taskStatus.className = 'badge-icon ' + cfg.badge;
+    taskStatus.className = 'due-pill ' + cfg.badge;
+    taskStatus.setAttribute('aria-label', cfg.label);
     taskStatus.querySelector('i').className = cfg.icon;
+    statusText.textContent = cfg.text;
   }
+
+  applyPriority(currentPriority);
+  applyStatus(currentStatus);
 
   // CHECKBOX
   toggle.addEventListener('change', function () {
