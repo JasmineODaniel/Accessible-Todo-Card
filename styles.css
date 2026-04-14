@@ -5,7 +5,7 @@
 }
 
 .sr-only {
-  position: absolute; 
+  position: absolute;
   width: 1px;
   height: 1px;
   overflow: hidden;
@@ -20,11 +20,11 @@ body {
 /* PAGE BACKGROUND — basket-weave grid */
 .page-bg {
   min-height: 100vh;
-  background-color: #f0f0f0;
+  background-color: #030303;
   background-image:
-    linear-gradient(rgba(160, 160, 160, 0.22) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(160, 160, 160, 0.22) 1px, transparent 1px);
-  background-size: 5px 5px;
+    linear-gradient(rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18) 1px, transparent 1px);
+  background-size: 6px 6px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -34,16 +34,16 @@ body {
 /* CARD — 0px border, reduced opacity background */
 article[data-testid="test-todo-card"] {
   position: relative;
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(16, 16, 16, 0.95);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 0px solid transparent;
+  border: #1f1f1f solid 10px;
   border-radius: 15px;
   width: 100%;
   max-width: 360px;
   min-height: 580px;
-  color: #1a1a1a;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.10), 0 4px 16px rgba(0, 0, 0, 0.06);
+  color: #ededed;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25), 0 4px 18px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -102,7 +102,7 @@ article[data-testid="test-todo-card"] {
 /* MAIN CONTENT — sits on top of wallpaper, 15px border-radius */
 .card-main {
   position: relative;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(28, 28, 28, 0.9);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 15px;
@@ -113,6 +113,7 @@ article[data-testid="test-todo-card"] {
   flex-direction: column;
   gap: 1rem;
   z-index: 1;
+  border: 15px solid transparent; /* 15px border */
 }
 
 /* DATE BAR */
@@ -364,6 +365,10 @@ p[data-testid="test-todo-description"][contenteditable="true"] {
   margin-top: auto;
 }
 
+.actions button i {
+  color: #050505;
+}
+
 button[data-testid="test-todo-edit-button"] {
   width: 40px;
   height: 40px;
@@ -371,18 +376,18 @@ button[data-testid="test-todo-edit-button"] {
   align-items: center;
   justify-content: center;
   font-size: 0.9rem;
-  color: #6a62c9;
-  background: rgba(127, 119, 221, 0.08);
-  border: 2px solid rgba(127, 119, 221, 0.3);
+  color: #050505;
+  background: linear-gradient(145deg, #b70000, #6a0000);
+  border: 2px solid #360000;
   border-radius: 10px;
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
 }
 
 button[data-testid="test-todo-edit-button"]:hover {
-  background: rgba(127, 119, 221, 0.18);
-  border-color: rgba(127, 119, 221, 0.6);
-  box-shadow: 0 4px 14px rgba(127, 119, 221, 0.2);
+  background: linear-gradient(145deg, #c70000, #7e0000);
+  border-color: #4a0505;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
 button[data-testid="test-todo-edit-button"]:focus-visible {
@@ -397,18 +402,18 @@ button[data-testid="test-todo-delete-button"] {
   align-items: center;
   justify-content: center;
   font-size: 0.9rem;
-  color: #d94040;
-  background: rgba(217, 64, 64, 0.07);
-  border: 2px solid rgba(217, 64, 64, 0.25);
+  color: #050505;
+  background: linear-gradient(145deg, #a70000, #4f0000);
+  border: 2px solid #3b0000;
   border-radius: 10px;
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
 }
 
 button[data-testid="test-todo-delete-button"]:hover {
-  background: rgba(217, 64, 64, 0.14);
-  border-color: rgba(217, 64, 64, 0.55);
-  box-shadow: 0 4px 14px rgba(217, 64, 64, 0.15);
+  background: linear-gradient(145deg, #cc0000, #650000);
+  border-color: #620000;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
 button[data-testid="test-todo-delete-button"]:focus-visible {
@@ -463,7 +468,7 @@ button:active {
 }
 
 .edit-panel-heading i {
-  color: #7f77dd;
+  color: #1500ff;
   font-size: 0.95rem;
 }
 
