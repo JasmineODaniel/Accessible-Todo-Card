@@ -1,76 +1,75 @@
 # Accessible Todo Card
 
-A modern, responsive and accessible Todo Card component built with semantic HTML. This project focuses on usability, testability and clean frontend structure.
+A modern, responsive, and accessible Todo Card component built with semantic HTML, CSS, and JavaScript.  
+This project emphasizes usability, testability, and clean frontend structure.
 
 ## Features
 
-Clean and modern user interface
-Fully responsive across mobile, tablet and desktop
-Accessible with keyboard navigation and screen reader support
-Semantic HTML structure
-Test friendly using data-testid attributes
-Dynamic time remaining display
-Interactive checkbox to mark tasks as complete
-Edit and delete actions with basic functionality
+- Clean and modern UI
+- Fully responsive on mobile, tablet, and desktop
+- Keyboard and screen-reader accessible
+- Semantic HTML structure
+- `data-testid` attributes for automated testing
+- Dynamic time-remaining display
+- Interactive completion toggle
+- Edit and delete actions
 
-## Built With
+## Tech Stack
 
-HTML5
-CSS3
-JavaScript
+- HTML5
+- CSS3
+- JavaScript (Vanilla)
 
-## Component Structure
+## Component Includes
 
-The Todo Card includes the following elements
-
-Task title
-Task description
-Priority indicator showing Low Medium or High
-Due date
-Time remaining such as Due in 3 days
-Status showing Pending In Progress or Done
-Completion toggle using a checkbox
-Tags such as Work Urgent Design
-Edit button
-Delete button
+- Task title
+- Task description
+- Priority indicator (`Low`, `Medium`, `High`)
+- Due date
+- Time remaining (e.g., `Due in 3 days`)
+- Status (`Pending`, `In Progress`, `Done`)
+- Completion checkbox
+- Tags (e.g., `Work`, `Urgent`, `Design`)
+- Edit button
+- Delete button
 
 ## Accessibility
 
-This project follows accessibility best practices
-
-Use of semantic HTML elements such as article time and button
-Keyboard navigable interface
-Accessible checkbox with proper label
-Use of aria labels where necessary
-Visible focus states
-Good color contrast
+- Semantic elements (`article`, `time`, `button`, etc.)
+- Keyboard-friendly interactions
+- Accessible checkbox labeling
+- ARIA attributes where needed
+- Visible focus states
+- Good color contrast
 
 ## Responsiveness
 
-Mobile first layout
-Works across screen sizes from 320px to 1200px
-Flexible layout with wrapping tags
-No horizontal overflow
+- Mobile-first layout
+- Supports screen sizes from `320px` to `1200px+`
+- Flexible layout with wrapping tags
+- No horizontal overflow
 
 ## Functionality
 
-Checkbox toggles task completion
-Completed tasks update visually with a strikethrough title
-Time remaining is calculated based on the due date
-Edit and delete buttons trigger basic actions
+- Checkbox toggles completion state
+- Completed task applies visual strike-through
+- Time remaining is calculated from due date
+- Edit and delete actions are interactive
 
 ## Testing
 
-All required elements include data-testid attributes for automated testing
+All required UI elements include `data-testid` attributes to support automated testing.
 
-## Use Case
+## Use Cases
 
-This component can be used in task management apps productivity tools and dashboards
+Useful for:
+
+- Task management apps
+- Productivity dashboards
+- Personal planning tools
 
 ## Author
 
-Jasmine Daniel
-Frontend Engineer
-THENEVERDONE
-
-
+**Jasmine Daniel**  
+Frontend Engineer  
+**THENEVERDONE**
