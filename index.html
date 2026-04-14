@@ -45,11 +45,16 @@
         <div class="due-row">
           <time id="due-date" data-testid="test-todo-due-date">
             <i class="fa-regular fa-clock"></i>
-            <span class="due-text">Due in 4 days</span>
+            <span class="due-text">Due 4d</span>
           </time>
-          <time id="time-remaining" data-testid="test-todo-time-remaining">
-            <span id="time-remaining-text">Calculating...</span>
-          </time>
+          <span id="priority-badge" class="due-pill priority-high" data-testid="test-todo-priority" aria-label="Priority: High">
+            <i class="fa-solid fa-bolt"></i>
+            <span id="priority-text">High</span>
+          </span>
+          <span id="task-status" class="due-pill status-inprogress" data-testid="test-todo-status" aria-label="Status: In Progress">
+            <i class="fa-solid fa-circle-half-stroke"></i>
+            <span id="status-text">In Progress</span>
+          </span>
         </div>
 
         <!-- DESCRIPTION -->
@@ -59,13 +64,6 @@
 
         <!-- META: Priority icon, Status icon, divider, Tag icons -->
         <div class="meta-tags-row">
-          <span id="priority-badge" class="badge-icon priority-high" data-testid="test-todo-priority" aria-label="Priority: High">
-            <i class="fa-solid fa-bolt"></i>
-          </span>
-          <span id="task-status" class="badge-icon status-inprogress" data-testid="test-todo-status" aria-label="Status: In Progress">
-            <i class="fa-solid fa-circle-half-stroke"></i>
-          </span>
-          <span class="meta-divider"></span>
           <ul class="tags-list" data-testid="test-todo-tags" aria-label="Tags">
             <li class="tag-icon" title="Work">
               <i class="fa-solid fa-briefcase"></i>
