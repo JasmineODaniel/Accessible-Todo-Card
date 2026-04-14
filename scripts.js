@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   editBtn.addEventListener('click', openEditPanel);
-  editSaveBtn.addEventListener('click', saveEdit);
+  editSaveBtn.addEventListener('click', saveEdit); 
   editCancelBtn.addEventListener('click', closeEditPanel);
 
   // DELETE
