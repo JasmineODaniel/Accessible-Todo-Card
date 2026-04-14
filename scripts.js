@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  var DUE_DATE = new Date('2026-04-18T18:00:00Z');
+  var DUE_DATE = new Date(Date.now() + 2 * 24 * 60 * 60 * 1000);
 
   var PRIORITY_MAP = {
     high:   { icon: 'fa-solid fa-bolt', badge: 'priority-high', label: 'Priority: High', text: 'High' },
@@ -25,6 +25,8 @@ document.addEventListener("DOMContentLoaded", function () {
   var taskStatus = document.getElementById('task-status');
   var priorityText = document.getElementById('priority-text');
   var statusText = document.getElementById('status-text');
+  var timeRemainingEl = document.getElementById('time-remaining');
+  var timeRemainingText = document.getElementById('time-remaining-text');
   var editBtn = document.getElementById('edit-btn');
   var editPanel = document.getElementById('edit-panel');
   var editTitleInput = document.getElementById('edit-title-input');
@@ -38,8 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var deleteConfirmBtn = document.getElementById('delete-confirm-btn');
   var deleteCancelBtn = document.getElementById('delete-cancel-btn');
   var cardEl = document.querySelector('article[data-testid="test-todo-card"]');
-
-  // DATE
   function renderCurrentDate() {
     var now = new Date();
     var options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
@@ -49,15 +49,35 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   renderCurrentDate();
 
-  function renderDueText() {
-    var diff = DUE_DATE.getTime() - Date.now();
-    var days = Math.max(0, Math.ceil(diff / 86400000));
-    var dueTextEl = document.querySelector('.due-text');
-    dueTextEl.textContent = days > 0 ? ('Due ' + days + 'd') : 'Due today';
-  }
-  renderDueText();
+  function getTimeRemainingText(due) {
+    var diffMs = due.getTime() - Date.now();
+    var absMs = Math.abs(diffMs);
+    var minutes = Math.floor(absMs / 60000);
+    var hours = Math.floor(absMs / 3600000);
+    var days = Math.ceil(absMs / 86400000);
 
-  // PRIORITY + STATUS
+    if (absMs < 60000) return "Due now!";
+    if (diffMs < 0) {
+      if (hours < 1) return "Overdue by " + Math.max(1, minutes) + " min";
+      if (days < 1) return "Overdue by " + hours + " hours";
+      return "Overdue by " + days + " days";
+    }
+    if (hours < 24) return "Due in " + Math.max(1, hours) + " hours";
+    return "Due in " + days + " days";
+  }
+
+  function updateTimeRemaining() {
+    var text = getTimeRemainingText(DUE_DATE);
+    timeRemainingText.textContent = text;
+    timeRemainingEl.classList.remove("soon", "overdue");
+    if (text.indexOf("Overdue") === 0) timeRemainingEl.classList.add("overdue");
+    if (text.indexOf("Due in") === 0 || text === "Due tomorrow" || text === "Due now!") {
+      timeRemainingEl.classList.add("soon");
+    }
+  }
+
+  updateTimeRemaining();
+  setInterval(updateTimeRemaining, 60000);
   function applyPriority(value) {
     var cfg = PRIORITY_MAP[value] || PRIORITY_MAP.high;
     currentPriority = value;
@@ -78,8 +98,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   applyPriority(currentPriority);
   applyStatus(currentStatus);
-
-  // CHECKBOX
   toggle.addEventListener('change', function () {
     if (this.checked) {
       taskTitle.classList.add('done');
@@ -89,8 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
       applyStatus('inprogress');
     }
   });
-
-  // EDIT
   function openEditPanel() {
     editTitleInput.value = taskTitle.textContent;
     editDescInput.value = taskDescription.textContent.trim();
@@ -114,8 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
   editBtn.addEventListener('click', openEditPanel);
   editSaveBtn.addEventListener('click', saveEdit); 
   editCancelBtn.addEventListener('click', closeEditPanel);
-
-  // DELETE
   function openDeleteModal() {
     deleteModal.hidden = false;
   }
@@ -135,3 +149,4 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 });
+
