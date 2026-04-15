@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var PRIORITY_MAP = {
     high:   { icon: 'fa-solid fa-bolt', badge: 'priority-high', label: 'Priority: High', text: 'High' },
     medium: { icon: 'fa-solid fa-signal', badge: 'priority-medium', label: 'Priority: Medium', text: 'Medium' },
-    low:    { icon: 'fa-solid fa-arrow-down', badge: 'priority-low', label: 'Priority: Low', text: 'Low' }
+    low:    { icon: 'fa-solid fa-arrow-down', badge: 'priority-low', label: 'Priority: Low', text: 'Low' } 
   };
 
   var STATUS_MAP = {
