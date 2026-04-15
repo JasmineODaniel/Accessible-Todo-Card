@@ -261,6 +261,65 @@ time[data-testid="test-todo-due-date"] i {
   font-weight: 700;
 }
 
+.state-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.priority-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08);
+}
+
+.overdue-indicator {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(217, 64, 64, 0.45);
+  background: rgba(217, 64, 64, 0.14);
+  color: #ff9e9e;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.controls-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.status-control,
+.expand-toggle {
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(20, 20, 20, 0.92);
+  color: #e5edf2;
+  font-size: 0.76rem;
+}
+
+.status-control {
+  padding: 0 10px;
+  min-width: 128px;
+}
+
+.expand-toggle {
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.status-control:focus-visible,
+.expand-toggle:focus-visible {
+  outline: 2px solid #37e9ff;
+  outline-offset: 2px;
+}
+
 time[data-testid="test-todo-time-remaining"] {
   display: inline-flex;
   align-items: center;
@@ -290,7 +349,7 @@ p[data-testid="test-todo-description"] {
   font-size: 0.85rem;
   color: #d5dbe0;
   line-height: 1.65;
-  padding-right: 96px;
+  padding-right: 8px;
   outline: none;
   border-radius: 6px;
   transition: background 0.2s ease, border-color 0.2s ease;
@@ -298,9 +357,17 @@ p[data-testid="test-todo-description"] {
 
 p[data-testid="test-todo-description"][contenteditable="true"] {
   background: rgba(127, 119, 221, 0.05);
-  padding: 6px 96px 6px 10px;
+  padding: 6px 8px 6px 10px;
   border-radius: 8px;
   border: 1.5px solid rgba(127, 119, 221, 0.3);
+}
+
+.collapsible-section {
+  overflow: hidden;
+}
+
+.collapsible-section.collapsed {
+  max-height: 58px;
 }
 
 
@@ -348,6 +415,18 @@ p[data-testid="test-todo-description"][contenteditable="true"] {
   border-color: rgba(150, 150, 150, 0.25);
 }
 
+.priority-indicator.priority-high {
+  background: #ff5b5b;
+}
+
+.priority-indicator.priority-medium {
+  background: #ffbf4d;
+}
+
+.priority-indicator.priority-low {
+  background: #49d18f;
+}
+
 .meta-divider {
   width: 1px;
   height: 24px;
@@ -392,6 +471,14 @@ p[data-testid="test-todo-description"][contenteditable="true"] {
   justify-content: flex-end;
   gap: 10px;
   margin-top: auto;
+}
+
+article[data-testid="test-todo-card"].is-overdue {
+  border-color: rgba(217, 64, 64, 0.7);
+}
+
+article[data-testid="test-todo-card"].is-done .card-main {
+  opacity: 0.88;
 }
 
 .actions button i {
@@ -718,6 +805,16 @@ button:active {
   }
   h2[data-testid="test-todo-title"] {
     font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 768px) {
+  article[data-testid="test-todo-card"] {
+    max-width: 480px;
+  }
+
+  .state-row {
+    gap: 10px;
   }
 }
 
