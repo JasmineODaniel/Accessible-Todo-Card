@@ -806,7 +806,7 @@ button:active {
   h2[data-testid="test-todo-title"] {
     font-size: 0.95rem;
   }
-}
+} 
 
 @media (min-width: 768px) {
   article[data-testid="test-todo-card"] {
